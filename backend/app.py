@@ -1,11 +1,16 @@
-from flask import Flask, request, make_response, jsonify
+from flask import Flask, request, make_response, render_template, jsonify
+from flask_cors import CORS
 # from backend.model import acc_binary
 import joblib
 import numpy as np
 import pickle
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
+
+@app.route("/")
+def index():
+    return render_template('home.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -46,15 +51,15 @@ def predict():
 
         # No heart disease
         if y == 0:
-            return jsonify({'heart_disease': False})
+            return render_template('nodisease.html')
 
         # y=1,2,3,4 are stages of heart disease
         else:
-            return jsonify({'heart_disease': True})
+            return render_template('heartdisease.html')
 
-    else:
-        return make_response("", 301)
-
+    @app.route('/about')
+    def about():
+        return render_template('about.html')
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

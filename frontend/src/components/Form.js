@@ -31,7 +31,7 @@ export default function Form() {
         e.preventDefault()
 
         const data = new FormData(form.current)
-        axios.post('http://localhost:80/predict', data)
+        axios.post('http://host.docker.internal:80/predict', data)
             .then(res => {
                 console.log(data)
                 console.log(res.data)
