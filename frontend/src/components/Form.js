@@ -1,5 +1,7 @@
-import React, {useRef} from 'react'
+import React, { useRef } from 'react'
 import axios from 'axios';
+import Heartdisease from "./Heartdisease";
+import Noheartdisease from "./Noheartdisease";
 
 
 export default function Form() {
@@ -16,18 +18,6 @@ export default function Form() {
     const form = useRef(null)
 
     const handleSubmit = (e) => {
-        console.log(`
-        age: ${age}
-        gender: ${gender}
-        trestbps: ${trestbps}
-        chol: ${chol}
-        fbs: ${fbs}
-        restecg: ${restecg}
-        thalach: ${thalach}
-        exang: ${exang}
-        cp: ${cp}
-        `);
-
         e.preventDefault()
 
         const data = {
@@ -41,16 +31,19 @@ export default function Form() {
             exang: exang,
             cp: cp,
         }
+
         axios.post('http://localhost:3000/predict', data)
             .then(res => {
                 console.log(data)
                 console.log(res.data)
             }).catch(error => {
-                console.log(error)
+            console.log(error)
         })
     }
+
     return (
-        <form ref={form} onSubmit={handleSubmit}>
+        <div>
+            <form ref={form} onSubmit={handleSubmit}>
             <h2>Enter data</h2>
                 <div>
                     <div>
@@ -179,5 +172,11 @@ export default function Form() {
                 <button>Submit</button>
             </div>
         </form>
+
+        <div>
+               # conditionally render a component here based on response object boolean
+        </div>
+        </div>
+
     )
 }
