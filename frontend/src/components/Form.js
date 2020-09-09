@@ -30,16 +30,24 @@ export default function Form() {
 
         e.preventDefault()
 
-        const data = new FormData(form.current)
-        axios.post('http://host.docker.internal:80/predict', data)
+        const data = {
+            age: age,
+            gender: gender,
+            trestbps: trestbps,
+            chol: chol,
+            fbs: fbs,
+            restecg: restecg,
+            thalach: thalach,
+            exang: exang,
+            cp: cp,
+        }
+        axios.post('http://localhost:3000/predict', data)
             .then(res => {
                 console.log(data)
                 console.log(res.data)
             }).catch(error => {
                 console.log(error)
         })
-
-
     }
     return (
         <form ref={form} onSubmit={handleSubmit}>
