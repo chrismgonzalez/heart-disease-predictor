@@ -1,4 +1,4 @@
-from flask import Flask, request, make_response, jsonify
+from flask import Flask, request, jsonify
 # from backend.model import acc_binary
 import joblib
 import numpy as np
@@ -13,7 +13,7 @@ def predict():
         data = request.get_json()
         print(data)
         age = int(data['age'])
-        sex = int(data['sex'])
+        sex = int(data['gender'])
         trestbps = float(data['trestbps'])
         chol = float(data['chol'])
         restecg = float(data['restecg'])
@@ -51,10 +51,6 @@ def predict():
         # y=1,2,3,4 are stages of heart disease
         else:
             return jsonify({'heart_disease': True})
-
-    else:
-        return make_response("", 301)
-
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
